@@ -1,0 +1,712 @@
+/* ================================================================
+   SPOTIFY-STYLE MUSIC PLAYER
+   Vinyl disc · Glassmorphism playlist · Animated visualizer
+   ================================================================ */
+
+/* ====== SECTION LAYOUT ====== */
+#music-player {
+  background: var(--bg);
+}
+
+/* ====== PLAYER GRID: left panel + right panel ====== */
+.sp-player {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 28px;
+  align-items: start;
+  min-height: 620px;
+}
+
+/* ================================================================
+   LEFT: NOW PLAYING PANEL
+   ================================================================ */
+.sp-now-playing {
+  background: linear-gradient(160deg, #111 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 24px;
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient glow behind panel */
+.sp-now-playing::before {
+  content: '';
+  position: absolute;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,245,58,0.09) 0%, transparent 70%);
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* ================================================================
+   VINYL DISC
+   ================================================================ */
+.sp-vinyl-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+.sp-vinyl {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  position: relative;
+  /* Spin animation — paused by default */
+  animation: vinylSpin 4s linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+/* Playing state — vinyl spins */
+#music-player.paused .sp-vinyl {
+  animation-play-state: running;
+}
+
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.sp-vinyl-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    #1a1a1a 0%,
+    #111 30%,
+    #1a1a1a 50%,
+    #0d0d0d 60%,
+    #181818 70%,
+    #0a0a0a 100%
+  );
+  position: relative;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.06),
+    0 20px 60px rgba(0,0,0,0.7),
+    0 0 40px rgba(200,245,58,0.08);
+  overflow: hidden;
+}
+
+/* Vinyl grooves — concentric rings */
+.sp-vinyl-grooves {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0px,
+    transparent 4px,
+    rgba(255,255,255,0.025) 4px,
+    rgba(255,255,255,0.025) 5px
+  );
+}
+
+/* Album art in center of vinyl */
+.sp-album-art {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.5);
+}
+
+.sp-album-art .img-area,
+#sp-album-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Center hole */
+.sp-vinyl-hole {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #050505;
+  border: 2px solid rgba(255,255,255,0.15);
+  z-index: 3;
+}
+
+/* Needle arm */
+.sp-needle {
+  position: absolute;
+  top: -12px;
+  right: -18px;
+  width: 80px;
+  height: 140px;
+  transform-origin: 68px 12px;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10;
+  /* Resting position — away from disc */
+  transform: rotate(-20deg);
+}
+
+/* Playing — needle moves onto disc */
+#music-player.paused .sp-needle {
+  transform: rotate(0deg);
+}
+
+.sp-needle-arm {
+  position: absolute;
+  top: 12px;
+  right: 30px;
+  width: 3px;
+  height: 120px;
+  background: linear-gradient(to bottom, #888, #555);
+  border-radius: 2px;
+  transform-origin: top;
+  transform: rotate(8deg);
+}
+
+.sp-needle-head {
+  position: absolute;
+  bottom: 0;
+  right: 25px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #c8f53a, #8ab52a);
+  box-shadow: 0 0 8px rgba(200,245,58,0.5);
+}
+
+/* Glow shadow under vinyl */
+.sp-vinyl-shadow {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(200,245,58,0.12);
+  filter: blur(16px);
+}
+
+/* ================================================================
+   TRACK INFO
+   ================================================================ */
+.sp-track-info {
+  text-align: center;
+  width: 100%;
+}
+
+.sp-track-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 10px;
+}
+
+.sp-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  opacity: 0.4;
+  transition: opacity 0.3s, box-shadow 0.3s;
+}
+
+/* Dot pulses when playing */
+#music-player.paused .sp-live-dot {
+  opacity: 1;
+  box-shadow: 0 0 0 3px rgba(200,245,58,0.25), 0 0 10px rgba(200,245,58,0.4);
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(200,245,58,0.25), 0 0 10px rgba(200,245,58,0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(200,245,58,0.1), 0 0 20px rgba(200,245,58,0.2); }
+}
+
+.sp-track-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  /* Truncate long titles */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.sp-track-artist {
+  font-size: 0.82rem;
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
+/* ================================================================
+   VISUALIZER CANVAS
+   ================================================================ */
+.sp-visualizer {
+  width: 100%;
+  height: 48px;
+  display: block;
+  border-radius: 6px;
+}
+
+/* ================================================================
+   PROGRESS BAR
+   ================================================================ */
+.sp-progress-wrap {
+  width: 100%;
+}
+
+.sp-progress-area {
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  padding: 8px 0;
+}
+
+.sp-progress-bg {
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #aae320);
+  border-radius: 100px;
+  position: relative;
+  transition: width 0.08s linear;
+}
+
+/* Thumb glow on hover */
+.sp-progress-area:hover .sp-progress-bar::after {
+  content: '';
+  position: absolute;
+  right: -4px; top: -4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(200,245,58,0.7);
+}
+
+.sp-time-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.sp-time {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ================================================================
+   CONTROLS
+   ================================================================ */
+.sp-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.sp-ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--fg-muted);
+  border-radius: 50%;
+  width: 42px; height: 42px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, transform 0.15s;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.sp-ctrl-btn:hover {
+  color: var(--fg);
+  background: rgba(255,255,255,0.06);
+  transform: scale(1.1);
+}
+
+.sp-ctrl-btn .material-icons {
+  font-size: 1.3rem;
+}
+
+/* Smaller secondary buttons */
+.sp-ctrl-sm .material-icons {
+  font-size: 1.1rem;
+}
+
+/* Play button — big, accent pill */
+.sp-ctrl-play {
+  width: 54px; height: 54px;
+  background: var(--accent) !important;
+  color: var(--bg) !important;
+  border-radius: 50%;
+  box-shadow: 0 4px 20px rgba(200,245,58,0.35);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.3s !important;
+}
+
+.sp-ctrl-play:hover {
+  background: #d8ff55 !important;
+  transform: scale(1.08) !important;
+  box-shadow: 0 6px 28px rgba(200,245,58,0.5) !important;
+}
+
+.sp-ctrl-play .material-icons {
+  font-size: 1.6rem !important;
+}
+
+/* Volume */
+.sp-volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.sp-volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 100px;
+  outline: none;
+  cursor: pointer;
+}
+
+.sp-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(200,245,58,0.4);
+}
+
+.sp-volume-slider::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+/* ================================================================
+   RIGHT: PLAYLIST PANEL
+   ================================================================ */
+.sp-playlist-panel {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 620px;
+}
+
+/* Panel header */
+.sp-playlist-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.2);
+}
+
+.sp-playlist-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.sp-playlist-title .material-icons {
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.sp-playlist-count {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-weight: 400;
+}
+
+/* Search input */
+.sp-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.sp-search-wrap:focus-within {
+  border-color: rgba(200,245,58,0.25);
+  background: rgba(200,245,58,0.03);
+}
+
+.sp-search-icon {
+  font-size: 1rem !important;
+  color: var(--fg-muted);
+  flex-shrink: 0;
+}
+
+.sp-search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  color: var(--fg);
+}
+
+.sp-search-input::placeholder {
+  color: var(--fg-muted);
+}
+
+/* ================================================================
+   TRACK LIST
+   ================================================================ */
+.sp-track-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200,245,58,0.15) transparent;
+}
+
+.sp-track-list::-webkit-scrollbar { width: 4px; }
+.sp-track-list::-webkit-scrollbar-track { background: transparent; }
+.sp-track-list::-webkit-scrollbar-thumb {
+  background: rgba(200,245,58,0.15);
+  border-radius: 2px;
+}
+
+/* Override the JS-generated <ul> */
+.sp-track-list ul {
+  list-style: none;
+  margin: 0; padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Each track row */
+.sp-track-list ul li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.15s;
+  position: relative;
+}
+
+.sp-track-list ul li:hover {
+  background: rgba(255,255,255,0.05);
+  transform: translateX(3px);
+}
+
+.sp-track-list ul li.playing {
+  background: rgba(200,245,58,0.07);
+  border: 1px solid rgba(200,245,58,0.12);
+}
+
+/* Track number */
+.sp-track-list ul li .sp-track-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--fg-muted);
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+li.playing .sp-track-num {
+  display: none;
+}
+
+/* Equalizer bars animation (when playing) */
+.sp-eq {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  width: 22px;
+  flex-shrink: 0;
+}
+
+li.playing .sp-eq {
+  display: flex;
+}
+
+.sp-eq span {
+  display: block;
+  width: 3px;
+  border-radius: 1px;
+  background: var(--accent);
+  animation: eqBar 0.8s ease-in-out infinite alternate;
+}
+
+.sp-eq span:nth-child(1) { height: 60%; animation-delay: 0s; }
+.sp-eq span:nth-child(2) { height: 100%; animation-delay: 0.15s; }
+.sp-eq span:nth-child(3) { height: 40%; animation-delay: 0.3s; }
+
+@keyframes eqBar {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
+}
+
+/* Album thumbnail in list */
+.sp-track-thumb {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Text info inside row */
+.sp-track-list ul li .row {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sp-track-list ul li .row span {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.sp-track-list ul li.playing .row span {
+  color: var(--accent);
+}
+
+.sp-track-list ul li .row p {
+  font-size: 0.72rem;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+/* Duration badge */
+.sp-track-list ul li .audio-duration {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--fg-muted);
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.04);
+  padding: 3px 8px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+li.playing .audio-duration {
+  color: var(--accent);
+  background: rgba(200,245,58,0.1);
+}
+
+/* ================================================================
+   PROGRESS BAR (inherited selector from music.js)
+   ================================================================ */
+.progress-bar {
+  cursor: pointer;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 900px) {
+  .sp-player {
+    grid-template-columns: 1fr;
+  }
+  .sp-now-playing {
+    padding: 28px 24px 22px;
+  }
+  .sp-playlist-panel {
+    height: 480px;
+  }
+  .sp-vinyl-wrap {
+    width: 200px;
+    height: 200px;
+  }
+  .sp-vinyl {
+    width: 200px;
+    height: 200px;
+  }
+  .sp-album-art {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sp-vinyl-wrap { width: 170px; height: 170px; }
+  .sp-vinyl { width: 170px; height: 170px; }
+  .sp-album-art { width: 76px; height: 76px; }
+}

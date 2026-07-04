@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phùng Gia Huy — Tester Intern</title>
+  <meta name="description" content="Portfolio cá nhân của Phùng Gia Huy — Tester Intern & IT Student">
+
+  <!-- Preconnect Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts: Inter (Body & Headings) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- Icons: Font Awesome & Material Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Music Player CSS (inherited from original, will use new styling) -->
+  <link rel="stylesheet" href="music-player.css">
+  <!-- Enhancements -->
+  <link rel="stylesheet" href="enhancements.css">
+</head>
+
+<body>
+
+  <!-- ====== Scroll Progress Bar ====== -->
+  <div id="scroll-progress"></div>
+
+  <!-- ====== Animated Background Canvas ====== -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ====== Floating Page Orbs ====== -->
+  <div class="page-orb page-orb-1"></div>
+  <div class="page-orb page-orb-2"></div>
+  <div class="page-orb page-orb-3"></div>
+
+
+
+  <!-- ====== PROJECT MODAL ====== -->
+  <div id="project-modal" role="dialog" aria-modal="true" aria-label="Project Details">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-container">
+      <!-- Browser-style top bar -->
+      <div class="modal-topbar">
+        <div class="modal-browser-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="modal-url-bar" id="modal-url-bar">localhost/project</div>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close">✕</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- Demo preview: image OR YouTube embed -->
+        <div class="modal-demo" id="modal-demo">
+          <img class="modal-demo-img" id="modal-demo-img" src="" alt="Project Preview">
+          <span class="modal-demo-badge" id="modal-demo-badge">Preview</span>
+        </div>
+        <!-- Info -->
+        <div class="modal-info">
+          <div class="modal-info-top">
+            <div class="modal-project-num" id="modal-project-num"></div>
+            <h2 class="modal-project-title" id="modal-project-title"></h2>
+          </div>
+          <div class="modal-action-btns" id="modal-action-btns"></div>
+          <div class="modal-divider"></div>
+          <p class="modal-desc" id="modal-desc"></p>
+          <div class="modal-tags" id="modal-tags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== NAVIGATION ====== -->
+  <nav id="nav">
+    <div class="nav-brand">
+      <img class="nav-avatar" src="images/avatar.jpg" alt="Gia Huy">
+      <span class="nav-brand-text">Gia Huy</span>
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#cv">CV</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Let's talk ↗</a>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <section id="hero">
+    <!-- Background orbs -->
+    <div class="hero-bg-orb hero-bg-orb-1"></div>
+    <div class="hero-bg-orb hero-bg-orb-2"></div>
+
+    <!-- Top-right floating card -->
+    <div class="hero-top-label">
+      <span class="hero-label-tag" id="hero-local-time">📍 TP. HỒ CHÍ MINH — Loading...</span>
+      <div class="hero-avatar-block">
+        <img src="images/avatar.jpg" alt="Phùng Gia Huy">
+        <div class="hero-avatar-info">
+          <span class="hero-avatar-name">Phùng Gia Huy</span>
+          <span class="hero-avatar-role">@giahuy1402</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center content wrapper -->
+    <div class="hero-center">
+      <!-- Index label -->
+      <span class="hero-number">001 — Portfolio 2026</span>
+
+      <!-- Big headline -->
+      <h1 class="hero-title" id="hero-title">
+        <span class="hero-title-line">
+          <span class="hero-title-word">Tester</span>
+        </span>
+        <span class="hero-title-line">
+          <span class="hero-title-word highlight">Intern</span>
+        </span>
+        <span class="hero-title-line">
+          <span class="hero-title-word hero-title-accent">&amp; Tinkerer</span>
+        </span>
+      </h1>
+
+      <!-- Divider line -->
+      <div class="hero-divider"></div>
+
+      <!-- Bottom row: desc + CTAs -->
+      <div class="hero-bottom">
+        <p class="hero-desc">
+          Sinh viên IT đam mê kiểm thử các <span class="highlight">Ứng dụng web, Mobile Apps</span>.
+          Hiện đang khám phá Python, JavaScript &amp; chăm chỉ học hỏi các công nghệ mới.
+        </p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn-primary">
+            Xem dự án <span class="btn-arrow">↗</span>
+          </a>
+          <a href="#contact" class="btn-outline">Liên hệ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom scroll hint -->
+    <div class="hero-scroll-hint">
+      <span class="hero-scroll-text">Cuộn để khám phá</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ====== MARQUEE STRIP ====== -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <!-- Items (duplicated for seamless loop) -->
+      <span class="marquee-item"><span class="marquee-dot"></span> Tester Intern</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> React.js</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Node.js</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> UI/UX Design</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Python / AI</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Vanilla JavaScript</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Open to Work</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> UTH Student</span>
+      <!-- Duplicate -->
+      <span class="marquee-item"><span class="marquee-dot"></span> Tester Intern</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> React.js</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Node.js</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> UI/UX Design</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Python / AI</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Vanilla JavaScript</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> Open to Work</span>
+      <span class="marquee-item"><span class="marquee-dot"></span> UTH Student</span>
+    </div>
+  </div>
+
+  <!-- ====== ABOUT ====== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">002 — About</div>
+          <h2 class="section-title">Về tôi</h2>
+        </div>
+        <span class="section-count">Gia Huy / 2006</span>
+      </div>
+
+      <div class="about-grid">
+        <!-- Left: editorial text + tags -->
+        <div class="about-text-block reveal">
+          <p class="lead">Một sinh viên IT tại TP.HCM, đam mê xây dựng những trải nghiệm web đẹp và ý nghĩa.</p>
+          <p>Tôi thích khám phá những công nghệ mới, Kiểm thử phần mềm, Trải nghiệm người dùng.
+            Mỗi dự án là một cơ hội để học hỏi và phát triển bản thân.</p>
+          <p>Ngoài code, tôi còn đam mê kiểm thử, nghe nhạc và xây dựng các công cụ nhỏ hỗ trợ cuộc sống hàng
+            ngày.</p>
+
+          <div class="about-tags-grid stagger-children">
+            <div class="about-tag-item">
+              <span class="about-tag-icon">⚡</span>
+              <span class="about-tag-label">Chuyên ngành</span>
+              <span class="about-tag-value">Mạng Máy Tính &amp; TTDL</span>
+            </div>
+            <div class="about-tag-item">
+              <span class="about-tag-icon">🎓</span>
+              <span class="about-tag-label">Trường</span>
+              <span class="about-tag-value">Giao Thông Vận Tải — TP.HCM</span>
+            </div>
+            <div class="about-tag-item">
+              <span class="about-tag-icon">🛠️</span>
+              <span class="about-tag-label">Stack chính</span>
+              <span class="about-tag-value">C++ · JS · Python</span>
+            </div>
+            <div class="about-tag-item">
+              <span class="about-tag-icon">🌱</span>
+              <span class="about-tag-label">Đang học</span>
+              <span class="about-tag-value">Application Testing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Avatar Card + Stats Grid -->
+        <div class="reveal-scale reveal-delay-2" style="display: flex; flex-direction: column; gap: 32px;">
+
+          <!-- Premium Interactive Avatar Card -->
+          <div class="about-avatar-card">
+            <div class="about-avatar-img-wrap">
+              <img src="images/avatar.jpg" alt="Phùng Gia Huy" class="about-avatar-img">
+              <div class="about-avatar-glow"></div>
+            </div>
+            <div class="about-avatar-info">
+              <h3 class="about-avatar-name">Phùng Gia Huy</h3>
+              <div class="about-avatar-meta">
+                <div class="about-avatar-meta-item">
+                  <span class="meta-label">Chuyên ngành</span>
+                  <span class="meta-value">Mạng Máy Tính &amp; Truyền Thông Dữ Liệu</span>
+                </div>
+                <div class="about-avatar-meta-item">
+                  <span class="meta-label">Trường</span>
+                  <span class="meta-value">UTH — TP.HCM</span>
+                </div>
+              </div>
+              <div class="about-avatar-roles">
+                <span class="role-badge">Tester Intern</span>
+                <span class="role-badge">Creative Developer</span>
+                <span class="role-badge">Cybersecurity Enthusiast</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="about-stats stagger-children">
+            <div class="about-stat">
+              <span class="about-stat-number">7+</span>
+              <span class="about-stat-label">Dự án hoàn thành</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-number">2+</span>
+              <span class="about-stat-label">Năm học lập trình</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-number">∞</span>
+              <span class="about-stat-label">Đam mê học hỏi</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-number">1</span>
+              <span class="about-stat-label">Mục tiêu phát triển</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PROJECTS ====== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">003 — Work</div>
+          <h2 class="section-title">Dự án</h2>
+        </div>
+        <a href="https://github.com/Giahuy1402" target="_blank" class="section-link">
+          Tất cả trên GitHub <span>↗</span>
+        </a>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">Tất cả</button>
+        <button class="filter-btn" data-filter="react">React</button>
+        <button class="filter-btn" data-filter="nodejs">Node.js</button>
+        <button class="filter-btn" data-filter="python">Python / AI</button>
+        <button class="filter-btn" data-filter="js">Vanilla JS</button>
+      </div>
+
+      <!-- Project list — editorial table style -->
+      <div class="project-list reveal" id="project-list-container">
+        <!-- Rendered dynamically via JavaScript -->
+      </div><!-- /.project-list -->
+    </div>
+  </section>
+
+  <!-- ====== SKILLS ====== -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">004 — Skills</div>
+          <h2 class="section-title">Kỹ năng</h2>
+        </div>
+      </div>
+
+      <div class="skills-grid reveal">
+        <!-- Frontend -->
+        <div class="skill-category">
+          <div class="skill-category-title">Frontend</div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <span class="skill-item-name">HTML / CSS</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.95"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">JavaScript</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.88"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">AI Skills</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.9"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">UI/UX Design</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.70"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backend -->
+        <div class="skill-category">
+          <div class="skill-category-title">Backend</div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <span class="skill-item-name">Node.js</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.72"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">Python</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.78"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">PostgreSQL</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.70"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">C++</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.85"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="skill-category">
+          <div class="skill-category-title">Tools & Other</div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <span class="skill-item-name">Git & GitHub</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.82"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">Figma</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.65"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">VS Code</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.92"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-item-name">Antigravity</span>
+              <div class="skill-item-bar-wrap">
+                <div class="skill-item-bar" data-width="0.98"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Belt -->
+      <div class="skills-marquee-wrap reveal" style="margin-top:48px">
+        <div class="skills-marquee-inner">
+          <span class="skill-pill"><span class="skill-dot"></span> HTML5</span>
+          <span class="skill-pill"><span class="skill-dot"></span> CSS3</span>
+          <span class="skill-pill"><span class="skill-dot"></span> JavaScript</span>
+          <span class="skill-pill"><span class="skill-dot"></span> React</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Node.js</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Python</span>
+          <span class="skill-pill"><span class="skill-dot"></span> C++</span>
+          <span class="skill-pill"><span class="skill-dot"></span> PostgreSQL</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Git</span>
+          <span class="skill-pill"><span class="skill-dot"></span> UI/UX Design</span>
+          <span class="skill-pill"><span class="skill-dot"></span> REST API</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Figma</span>
+          <!-- Duplicate -->
+          <span class="skill-pill"><span class="skill-dot"></span> HTML5</span>
+          <span class="skill-pill"><span class="skill-dot"></span> CSS3</span>
+          <span class="skill-pill"><span class="skill-dot"></span> JavaScript</span>
+          <span class="skill-pill"><span class="skill-dot"></span> React</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Node.js</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Python</span>
+          <span class="skill-pill"><span class="skill-dot"></span> C++</span>
+          <span class="skill-pill"><span class="skill-dot"></span> PostgreSQL</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Git</span>
+          <span class="skill-pill"><span class="skill-dot"></span> UI/UX Design</span>
+          <span class="skill-pill"><span class="skill-dot"></span> REST API</span>
+          <span class="skill-pill"><span class="skill-dot"></span> Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== EDUCATION ====== -->
+  <section id="education">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">005 — Background</div>
+          <h2 class="section-title">Học vấn</h2>
+        </div>
+      </div>
+
+      <div class="education-list reveal">
+        <div class="education-item">
+          <img class="education-logo" src="images/uthlogo.png" alt="Logo UTH">
+          <div class="education-info">
+            <span class="education-school">Trường Đại học Giao Thông Vận Tải TP.HCM</span>
+            <span class="education-major">Chuyên ngành Mạng máy tính và Truyền thông dữ liệu — Đang học full-stack
+              development, tập trung vào Python, C++ và các hệ thống mạng.</span>
+          </div>
+          <span class="education-period">2024 — 2028</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CV ====== -->
+  <section id="cv">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">006 — Resume</div>
+          <h2 class="section-title">CV</h2>
+        </div>
+      </div>
+
+      <div class="cv-block reveal">
+        <div class="cv-left">
+          <h3 class="cv-title">Xem hành trình<br>học tập &amp; kinh nghiệm</h3>
+          <p class="cv-desc">
+            CV của tôi tóm tắt các dự án đã thực hiện, kỹ năng kỹ thuật
+            và quá trình học tập tại đại học. Sẵn sàng cho các cơ hội
+            internship và part-time.
+          </p>
+          <a class="btn-download"
+            href="https://drive.google.com/file/d/1iKX3HdrjynhixmKJ8me3nEnQakX_7G7a/view?usp=sharing" target="_blank">
+            <i class="fas fa-file-arrow-down"></i> Tải CV (PDF) ↗
+          </a>
+          <div class="cv-stat-row">
+            <div class="cv-stat">
+              <span class="cv-stat-num">7+</span>
+              <span class="cv-stat-label">Projects</span>
+            </div>
+            <div class="cv-stat">
+              <span class="cv-stat-num">2+</span>
+              <span class="cv-stat-label">Years</span>
+            </div>
+            <div class="cv-stat">
+              <span class="cv-stat-num">10+</span>
+              <span class="cv-stat-label">Technologies</span>
+            </div>
+          </div>
+        </div>
+        <div class="cv-right">
+          <span class="cv-right-label">Current Status</span>
+          <p class="cv-right-text">Đang là sinh viên năm 2 tại UTH — Tìm kiếm cơ hội <strong>Internship</strong> hoặc
+            <strong>Part-time</strong> trong lĩnh vực Frontend / Full-stack development.
+          </p>
+          <div style="width:100%; height:1px; background: rgba(200,245,58,0.15); margin:8px 0;"></div>
+          <span class="cv-right-label">Availability</span>
+          <p class="cv-right-text" style="color:#c8f53a; font-weight:600;">✓ Available Now</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== MUSIC PLAYER ====== -->
+  <section id="music-player">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">007 — Vibes</div>
+          <h2 class="section-title">Nghe nhạc</h2>
+        </div>
+        <span class="section-count">♫ Personal Playlist</span>
+      </div>
+
+      <!-- Spotify-style player layout -->
+      <div class="sp-player reveal">
+
+        <!-- ===== LEFT: Now Playing Panel ===== -->
+        <div class="sp-now-playing">
+
+          <!-- Vinyl Disc -->
+          <div class="sp-vinyl-wrap">
+            <div class="sp-vinyl" id="sp-vinyl">
+              <div class="sp-vinyl-inner">
+                <div class="sp-vinyl-grooves"></div>
+                <div class="sp-album-art">
+                  <img class="img-area" id="sp-album-img" src="" alt="Album Art">
+                </div>
+                <div class="sp-vinyl-hole"></div>
+              </div>
+            </div>
+            <!-- Needle arm -->
+            <div class="sp-needle" id="sp-needle">
+              <div class="sp-needle-arm"></div>
+              <div class="sp-needle-head"></div>
+            </div>
+            <!-- Reflection glow under disc -->
+            <div class="sp-vinyl-shadow"></div>
+          </div>
+
+          <!-- Track info -->
+          <div class="sp-track-info">
+            <div class="sp-track-badge">
+              <span class="sp-live-dot" id="sp-live-dot"></span>
+              <span class="sp-live-text">Now Playing</span>
+            </div>
+            <div class="sp-track-name name" id="sp-track-name">—</div>
+            <div class="sp-track-artist artist" id="sp-track-artist">—</div>
+          </div>
+
+          <!-- Waveform Visualizer -->
+          <canvas id="music-visualizer" class="sp-visualizer"></canvas>
+
+          <!-- Progress bar -->
+          <div class="sp-progress-wrap">
+            <div class="progress-area sp-progress-area">
+              <div class="sp-progress-bg">
+                <div class="progress-bar sp-progress-bar"></div>
+              </div>
+            </div>
+            <div class="sp-time-row">
+              <span class="current-time sp-time">0:00</span>
+              <span class="max-duration sp-time">0:00</span>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="sp-controls controls" style="position:relative">
+            <!-- Repeat / Shuffle -->
+            <button class="sp-ctrl-btn sp-ctrl-sm" id="repeat-plist" title="Repeat">
+              <i class="material-icons">repeat</i>
+            </button>
+
+            <!-- Prev -->
+            <button class="sp-ctrl-btn" id="prev" title="Previous">
+              <i class="material-icons">skip_previous</i>
+            </button>
+
+            <!-- Play/Pause -->
+            <button class="sp-ctrl-btn sp-ctrl-play play-pause" id="sp-play-btn" title="Play / Pause">
+              <i class="material-icons play">play_arrow</i>
+            </button>
+
+            <!-- Next -->
+            <button class="sp-ctrl-btn" id="next" title="Next">
+              <i class="material-icons">skip_next</i>
+            </button>
+
+            <!-- Volume -->
+            <div class="sp-volume-wrap">
+              <button class="sp-ctrl-btn sp-ctrl-sm" id="volume-icon" title="Mute">
+                <i class="material-icons">volume_up</i>
+              </button>
+              <input type="range" id="volume-range" min="0" max="1" step="0.01" value="1" class="sp-volume-slider">
+            </div>
+
+            <!-- Hidden audio element -->
+            <audio id="main-audio" src=""></audio>
+          </div>
+        </div>
+
+        <!-- ===== RIGHT: Playlist Panel ===== -->
+        <div class="sp-playlist-panel">
+          <!-- Panel header -->
+          <div class="sp-playlist-header">
+            <div class="sp-playlist-title">
+              <i class="material-icons">queue_music</i>
+              Danh sách phát
+              <span class="sp-playlist-count" id="sp-count"></span>
+            </div>
+            <!-- Search -->
+            <div class="sp-search-wrap">
+              <i class="material-icons sp-search-icon">search</i>
+              <input type="text" id="music-search" class="sp-search-input" placeholder="Tìm bài hát, nghệ sĩ...">
+            </div>
+          </div>
+
+          <!-- Track list -->
+          <div class="sp-track-list" id="sp-track-list">
+            <ul id="sp-ul"></ul>
+          </div>
+        </div>
+
+      </div><!-- /.sp-player -->
+    </div>
+  </section>
+
+
+  <!-- ====== CONTACT ====== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">008 — Contact</div>
+          <h2 class="section-title">Liên hệ</h2>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Left -->
+        <div class="reveal">
+          <h3 class="contact-tagline">
+            Hãy cùng xây dựng<br>
+            <span>điều gì đó tuyệt vời.</span>
+          </h3>
+          <p class="contact-desc">
+            Tôi luôn sẵn lòng lắng nghe các ý tưởng mới, cơ hội hợp tác
+            hay chỉ đơn giản là một cuộc trò chuyện về công nghệ và thiết kế.
+          </p>
+
+          <div class="contact-email-block">
+            <div class="contact-email-text">
+              <span class="contact-email-label">Email</span>
+              <a id="email-address" class="contact-email-addr" href="mailto:phunggiahuy.uth@gmail.com">
+                phunggiahuy.uth@gmail.com
+              </a>
+            </div>
+            <button id="copy-email-btn" class="btn-copy-email">
+              <i class="far fa-copy"></i> Sao chép
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: social links -->
+        <div class="reveal reveal-delay-2">
+          <div class="contact-social-list">
+            <a class="contact-social-item" href="https://github.com/Giahuy1402" target="_blank">
+              <div class="contact-social-left">
+                <div class="contact-social-icon"><i class="fab fa-github"></i></div>
+                <div class="contact-social-info">
+                  <span class="contact-social-name">GitHub</span>
+                  <span class="contact-social-handle">@Giahuy1402</span>
+                </div>
+              </div>
+              <span class="contact-social-arrow">↗</span>
+            </a>
+            <a class="contact-social-item" href="https://www.facebook.com/pghuy1402" target="_blank">
+              <div class="contact-social-left">
+                <div class="contact-social-icon"><i class="fab fa-facebook"></i></div>
+                <div class="contact-social-info">
+                  <span class="contact-social-name">Facebook</span>
+                  <span class="contact-social-handle">pghuy1402</span>
+                </div>
+              </div>
+              <span class="contact-social-arrow">↗</span>
+            </a>
+            <a class="contact-social-item" href="https://www.instagram.com/giahyy1402.esc" target="_blank">
+              <div class="contact-social-left">
+                <div class="contact-social-icon"><i class="fab fa-instagram"></i></div>
+                <div class="contact-social-info">
+                  <span class="contact-social-name">Instagram</span>
+                  <span class="contact-social-handle">@giahyy1402.esc</span>
+                </div>
+              </div>
+              <span class="contact-social-arrow">↗</span>
+            </a>
+            <a class="contact-social-item" href="mailto:phunggiahuy.uth@gmail.com">
+              <div class="contact-social-left">
+                <div class="contact-social-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-social-info">
+                  <span class="contact-social-name">Email</span>
+                  <span class="contact-social-handle">phunggiahuy.uth@gmail.com</span>
+                </div>
+              </div>
+              <span class="contact-social-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-brand">Gia Huy</span>
+        <span class="footer-center">© <span id="year"></span> — Built with ❤️ &amp; many ☕</span>
+        <span class="footer-right">UTH · TP.HCM</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="projects-list.js"></script>
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
+  <script src="music-list.js"></script>
+  <script src="music.js"></script>
+  <script src="enhancements.js"></script>
+</body>
+
+</html>
